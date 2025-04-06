@@ -1,4 +1,4 @@
-import { ActionGetResponse } from "@solana/actions"
+import { ActionGetResponse, ACTIONS_CORS_HEADERS } from "@solana/actions"
 
 export const OPTIONS = GET;
 
