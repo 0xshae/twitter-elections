@@ -43,6 +43,8 @@ pub mod votingdapp {
               ) -> Result<()>{
       let candidate = &mut ctx.accounts.candidate;
       candidate.candidate_votes += 1;
+      msg!("You voted for candidate: {}", candidate.candidate_name);
+      msg!("The number of votes for candidate: {}", candidate.candidate_votes);
       Ok(())
               }
 

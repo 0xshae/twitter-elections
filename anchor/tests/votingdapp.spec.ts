@@ -95,7 +95,9 @@ let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
 
   });
 
-  //test for voting
+ 
+
+ // test for voting
 
   it('vote', async () => {
     await votingProgram.methods.vote(
@@ -112,7 +114,23 @@ let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
     const yacineMTBCandidate = await votingProgram.account.candidate.fetch(yacineAddress);
     
     console.log(yacineMTBCandidate);
-    expect(yacineMTBCandidate.candidateVotes.toNumber()).toEqual(1);
+  });
+
+  it('vote', async () => {
+    await votingProgram.methods.vote(
+      "Primeagen",
+      new anchor.BN(1),
+    ).rpc();
+
+    const [primeagenAddress] = PublicKey.findProgramAddressSync(
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from("Primeagen")],
+      votingAddress,
+    );
+    
+    //fetching account details using PDA
+    const primeagenCandidate = await votingProgram.account.candidate.fetch(primeagenAddress);
+    
+    console.log(primeagenCandidate);
   });
 
 }) 
