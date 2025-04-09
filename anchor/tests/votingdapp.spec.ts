@@ -5,21 +5,28 @@ import { Program } from '@coral-xyz/anchor';
 import { Votingdapp } from '../target/types/votingdapp';
 
 const IDL = require("../target/idl/votingdapp.json");
-const votingAddress = new PublicKey("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF");
+const votingAddress = new PublicKey("ChtjjRf7q9pPTGVHWJtjk67NbuNk46Pgw3WYf5wnGCuS");
+
 
 describe('Votingdapp', () => {
-  let context;
-  let provider;
-  let votingProgram: anchor.Program<Votingdapp>;
 
-  beforeAll( async () => {
-    context = await startAnchor("", [{name: "votingdapp", programId: votingAddress}], []);
-	  provider = new BankrunProvider(context);
-    votingProgram = new Program<Votingdapp>(
-		IDL,
-		provider,
-	); 
-  }) 
+let context;
+let provider;
+anchor.setProvider(anchor.AnchorProvider.env());
+let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
+
+  // let context;
+  // let provider;
+  // let votingProgram: anchor.Program<Votingdapp>;
+
+  // beforeAll( async () => {
+  //   context = await startAnchor("", [{name: "votingdapp", programId: votingAddress}], []);
+	//   provider = new BankrunProvider(context);
+  //   votingProgram = new Program<Votingdapp>(
+	// 	IDL,
+	// 	provider,
+	// ); 
+ 
 
 
 //test for initializing poll
@@ -50,6 +57,7 @@ describe('Votingdapp', () => {
   //test for initializing candidate
 
   it('Initialize Candidate', async () => {
+    //CANDIDATE #1
     await votingProgram.methods.initializeCandidate(
       "yacineMTB",
       new anchor.BN(1),
@@ -87,12 +95,6 @@ describe('Votingdapp', () => {
 
   });
 
-
-  const [primeAddress] = PublicKey.findProgramAddressSync(
-    [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from("Primeagen")],
-    votingAddress,
-  );
-
   //test for voting
 
   it('vote', async () => {
@@ -113,7 +115,5 @@ describe('Votingdapp', () => {
     expect(yacineMTBCandidate.candidateVotes.toNumber()).toEqual(1);
   });
 
-
+}) 
   
-
-});

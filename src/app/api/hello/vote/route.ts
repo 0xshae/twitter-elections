@@ -1,5 +1,5 @@
-import { ActionGetResponse, ActionPostRequest, ACTIONS_CORS_HEADERS } from "@solana/actions";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { ActionGetResponse, ActionPostRequest, ACTIONS_CORS_HEADERS, createPostResponse } from "@solana/actions";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { Votingdapp } from "@/../anchor/target/types/votingdapp";
 import { BN, Program } from "@coral-xyz/anchor";
 
@@ -40,6 +40,7 @@ export async function POST(request: Request) {
   }
 
   const connection = new Connection("http://127.0.0.1:8899", "confirmed" );
+
   const program: Program<Votingdapp> = new Program(IDL, {connection});
 
   const body: ActionPostRequest = await request.json();
@@ -58,4 +59,21 @@ export async function POST(request: Request) {
   }
   )
   .instruction();
+
+  const blockhash = await connection.getLatestBlockhash();
+
+  const transaction = new Transaction({
+    feePayer: voter,
+    blockhash: blockhash.blockhash,
+    lastValidBlockHeight: blockhash.lastValidBlockHeight,
+  }).add(instruction);
+
+  const response = await createPostResponse({
+    fields: {
+      type: "transaction",
+      transaction: transaction
+    }
+  });
+
+  return Response.json(response, {headers: ACTIONS_CORS_HEADERS});
 }

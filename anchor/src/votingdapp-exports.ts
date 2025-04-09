@@ -21,7 +21,7 @@ export function getVotingdappProgramId(cluster: Cluster) {
     case 'devnet':
     case 'testnet':
       // This is the program ID for the Votingdapp program on devnet and testnet.
-      return new PublicKey('coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF')
+      return new PublicKey('ChtjjRf7q9pPTGVHWJtjk67NbuNk46Pgw3WYf5wnGCuS')
     case 'mainnet-beta':
     default:
       return VOTINGDAPP_PROGRAM_ID
