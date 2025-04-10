@@ -117,22 +117,22 @@ let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
 
   //test for voting
 
-  // it('vote', async () => {
-  //   await votingProgram.methods.vote(
-  //     "yacineMTB",
-  //     new anchor.BN(1),
-  //   ).rpc();
+  it('vote', async () => {
+    await votingProgram.methods.vote(
+      "yacineMTB",
+      new anchor.BN(1),
+    ).rpc();
 
-  //   const [yacineAddress] = PublicKey.findProgramAddressSync(
-  //     [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from("yacineMTB")],
-  //     votingAddress,
-  //   );
+    const [yacineAddress] = PublicKey.findProgramAddressSync(
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from("yacineMTB")],
+      votingAddress,
+    );
     
-  //   //fetching account details using PDA
-  //   const yacineMTBCandidate = await votingProgram.account.candidate.fetch(yacineAddress);
+    //fetching account details using PDA
+    const yacineMTBCandidate = await votingProgram.account.candidate.fetch(yacineAddress);
     
-  //   console.log(yacineMTBCandidate);
-  // });
+    console.log(yacineMTBCandidate);
+  });
 
   // it('vote', async () => {
   //   await votingProgram.methods.vote(
@@ -170,7 +170,7 @@ let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
       new anchor.BN(1),
     ).rpc();
 
-})
+ })
 
 });
   
